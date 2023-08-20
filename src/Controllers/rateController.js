@@ -43,8 +43,9 @@ const getRateByUserID = async(req, res) => {
 // Xử lý đánh giá nhà hàng (Lấy danh sách theo nhà hàng và user)
 const getRateByResAndUserID = async(req, res) => {
     const { resID, userID } = req.params;
-    const data = await model.rate_res.findAll({
-        where: { res_id: resID, user_id: userID }
+    const data = await model.rate_res.findOne({
+        where: { res_id: resID, user_id: userID },
+        include: ["re", "user"]
     });
     res.send(data);
 }

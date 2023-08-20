@@ -1,3 +1,4 @@
+import { BelongsTo } from "sequelize";
 import sequelize from "../Models/index.js";
 import initModels from '../Models/init-models.js'
 
@@ -65,8 +66,9 @@ const getLikeByResID = async(req, res) => {
 // Xử lý like nhà hàng (Lấy danh sách like theo nhà hàng và user)
 const getLikeByResAndUserID = async (req, res) => {
     const { resID, userID } = req.params;
-    const data = await model.like_res.findAll({
-        where: { res_id: resID, user_id: userID }
+    const data = await model.like_res.findOne({
+        where: { res_id: resID, user_id: userID },
+        include: ["re", "user"]
     });
     res.send(data);
 }
